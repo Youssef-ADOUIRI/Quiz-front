@@ -1,38 +1,324 @@
-.App {
+body {
+  background-color: #197857;
+  max-width: max-content;
+  height: auto;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+  font-family: 'Faint Green Demo';
+  src: url('fonts/Vocation.ttf') format('truetype');
+}
+
+
+.img_title {
+  width: 20%;
+  height: 20%;
+  margin: 0;
+  padding: 0;
+  margin-left: 10%;
+}
+
+.landing_bubble_container {
+  justify-content: center;
+  /* align-items: center; */
+  height: 100vh;
+  display: flex;
+}
+
+.landing_bubble {
+  margin-top: 0;
+  width: 80%;
+  height: 70%;
+  background-color: #468F76;
+  border-radius: 50px;
+  padding: 0px;
+  box-shadow: 0 0 10px rgba(175, 3, 3, 0.1);
+  position: relative;
+}
+
+.img_bubble {
+  left: 3%;
+  width: 80%;
+  top: -15%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+}
+
+.get_started_bubble {
+  display: flex;
+  align-items: center;
+  /* center vertically */
+  justify-content: center;
+  /* center horizontally */
+  width: 45%;
+  height: auto;
+  top: 70%;
+  left: 5%;
+  position: relative;
+  background-color: #2B8164;
+  border-radius: 40px;
+  padding: 30px;
+  text-align: center;
+  border: 0.5px solid;
+  border-color: azure;
+  -webkit-transition-duration: 0.15s;
+  transition-duration: 0.15s;
+  -webkit-transition-property: box-shadow, transform;
+  transition-property: box-shadow, transform;
+}
+
+.get_started {
+  cursor: pointer;
+  color: #fff;
+  top: 0%;
+  position: relative;
+  font-weight: 1000;
+  font-family: 'Roboto', sans-serif;
+  font-size: 300%;
+  vertical-align: middle;
+  text-transform: uppercase;
+  text-decoration: none;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.get_started_bubble:hover,
+.get_started_bubble:focus,
+.get_started_bubble:active {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.txt_bubble {
+  font-family: 'Roboto', sans-serif;
+  font-size: 287%;
+  color: white;
+  position: relative;
+  font-weight: 800;
+}
+
+.txt_bubble_summarize {
+  top: 18%;
+  left: 40%;
+}
+
+
+.txt_bubble_paraphrase {
+  top: 10%;
+  left: 45%;
+}
+
+.quiz {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 1000;
+  color: #D1E3DD;
+  position: relative;
+  font-size: 950%;
+  bottom: 48%;
+  left: 65%;
+  transform: rotate(-20deg);
+}
+
+.default-background {
+  min-height: 40vh;
+  width: 100%;
+  background-color: #E6E6E6;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.choose_input {
+  font-family: 'Roboto', sans-serif;
+  font-size: 50px;
+  color: #197857;
+  font-weight: 800;
+  margin-top: 40px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.button-wrapper {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  width: 70%;
+  /* Change as needed */
+  margin: 50px auto;
+  /* Center the container */
 }
 
-.App-link {
-  color: #61dafb;
+.button {
+  width: 30%;
+  display: inline-block;
+  text-align: center;
+  border-radius: 40px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 80px;
+  color: #468F76;
+  border-color: transparent;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  font-weight: 1000;
+  font-family: 'Work Sans', sans-serif;
+  cursor: pointer;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.center {
+  background-color: #ffffff;
+}
+
+.left {
+  background-color: #ffffff;
+}
+
+.right {
+  background-color: #ffffff;
+}
+
+.InputContainer {
+  margin: auto;
+}
+
+.InputTextarea {
+  position: relative;
+  background-color: #fff;
+  border: 5px solid #197857;
+  border-radius: 50px;
+  margin-bottom: 1em;
+  clear: both;
+  max-width: 80vw;
+  min-width: 70vw;
+  padding: 20px;
+  font-size: 25px;
+  font-family: 'Work Sans', sans-serif;
+  display: block;
+  margin: auto;
+  margin-bottom: 1em;
+  clear: both;
+
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.InputTextarea::-webkit-scrollbar {
+  display: none;
+}
+
+.back_2 {
+  height: 40vh;
+  width: 100%;
+  background-color: #E6E6E6;
+  text-align: center;
+}
+
+.button_outputs {
+  width: 50%;
+  text-align: center;
+  border-radius: 40px;
+  text-decoration: none;
+  margin: auto;
+  font-weight: bold;
+  font-size: 80px;
+  color: #197857;
+  background-color: #fff;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  font-weight: 1000;
+  font-family: 'Work Sans', sans-serif;
+  margin-top: 20px;
+}
+
+.view_output {
+  height: auto;
+}
+
+.view_output {
+  font-family: 'Roboto', sans-serif;
+  font-size: 50px;
+  color: #fff;
+  font-weight: 800;
+  margin-top: 40px;
+  text-align: center;
+}
+
+.button_type_output {
+  width: 30%;
+  display: inline-block;
+  text-align: center;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 35px;
+  padding: 15px;
+  color: #fff;
+  background-color: #468F76;
+  border-color: transparent;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  font-weight: 1000;
+  font-family: 'Work Sans', sans-serif;
+  cursor: pointer;
+}
+
+.OutputContainer {
+  margin: auto;
+}
+
+.OutputTextarea {
+  position: relative;
+  background-color: #197857;
+  border: 5px solid #fff;
+  border-radius: 50px;
+  margin-bottom: 1em;
+  clear: both;
+  max-width: 80vw;
+  min-width: 70vw;
+  padding: 20px;
+  font-size: 25px;
+  font-family: 'Work Sans', sans-serif;
+  display: block;
+  margin: auto;
+  margin-bottom: 1em;
+  clear: both;
+  color: #fff;
+
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.OutputTextarea::-webkit-scrollbar {
+  display: none;
+}
+
+.download_section {
+  display: flex;
+  margin: auto;
+  width: 70vw;
+  margin-bottom: 30px;
+}
+
+.download_btn {
+  width: 100%;
+  text-align: center;
+  border-radius: 30px;
+  text-decoration: none;
+  margin: auto;
+  font-weight: bold;
+  font-size: 45px;
+  padding: 15px;
+  color: #fff;
+  background-color: #468F76;
+  border-color: transparent;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  font-weight: 1000;
+  font-family: 'Work Sans', sans-serif;
+  cursor: pointer;
+
+  margin: 10px;
 }
