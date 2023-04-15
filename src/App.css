@@ -104,6 +104,7 @@ body {
   font-weight: 800;
 }
 
+
 .txt_bubble_summarize {
   top: 18%;
   left: 40%;
@@ -141,6 +142,8 @@ body {
   margin-top: 40px;
 }
 
+
+
 .button-wrapper {
   display: flex;
   justify-content: space-between;
@@ -167,6 +170,8 @@ body {
   cursor: pointer;
 }
 
+
+
 .center {
   background-color: #ffffff;
 }
@@ -181,6 +186,71 @@ body {
 
 .InputContainer {
   margin: auto;
+}
+
+
+.link_container {
+  display: flex;
+  justify-content: center;
+  width: 80%;
+  margin: auto;
+  margin-bottom: 60px;
+}
+
+.give_text_btn {
+  width: 100%;
+  max-width: 20rem;
+  margin: auto 50px;
+  display: inline-block;
+  text-align: center;
+  border-radius: 40px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 2.5rem;
+  padding: 15px;
+  color: #468F76;
+  border-color: transparent;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  font-weight: 1000;
+  font-family: 'Work Sans', sans-serif;
+  cursor: pointer;
+}
+
+
+.label_pdf input[type="file"] {
+  position: absolute;
+  top: -1000px;
+}
+
+.label_pdf {
+  cursor: pointer;
+  border: 2px solid #468F76;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  font-weight: 1000;
+  font-family: 'Work Sans', sans-serif;
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin: 5px;
+  font-size: 2.5rem;
+  color: #fff;
+  background: #468F76;
+  display: inline-block;
+}
+
+.label_pdf:hover {
+  background: #5cbd95;
+}
+
+.label_pdf:active {
+  background: #9fa1a0;
+}
+
+.label_pdf:invalid+span {
+  color: #000000;
+}
+
+.label_pdf:valid+span {
+  color: #ffffff;
 }
 
 .InputTextarea {
