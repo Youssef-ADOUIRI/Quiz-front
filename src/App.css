@@ -261,7 +261,7 @@ body {
   background-color: #fff;
   border: 5px solid #197857;
   border-radius: 50px;
-  
+
   clear: both;
   max-width: 80vw;
   min-width: 50vw;
@@ -270,7 +270,7 @@ body {
   font-family: 'Work Sans', sans-serif;
   display: block;
   margin: auto;
- 
+
   clear: both;
 
   -ms-overflow-style: none;
@@ -394,4 +394,19 @@ body {
   cursor: pointer;
 
   margin: 10px;
+}
+
+.error_container {
+  margin: auto;
+  width: 80vw;
+  display: flex;
+  justify-content: center;
+}
+
+.error {
+  font-family: 'Roboto', sans-serif;
+  font-size: 287%;
+  color: #fff;
+  font-weight: 800;
+  text-align: center;
 }

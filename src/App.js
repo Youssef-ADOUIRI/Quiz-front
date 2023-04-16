@@ -26,8 +26,9 @@ function downloadPDF(text, txt_type) {
   doc.setFont("times", "normal");
   const splitText = doc.splitTextToSize(text, doc.internal.pageSize.width - 20);
   let cursorY = 20; // set initial y position
-  splitText.forEach(line => {
-    if (cursorY > 280) { // check if the cursor is at the end of the page
+  splitText.forEach((line) => {
+    if (cursorY > 280) {
+      // check if the cursor is at the end of the page
       doc.addPage(); // add new page
       cursorY = 20; // reset y position
     }
@@ -44,10 +45,9 @@ function App() {
   const [istextArea, setIsTextArea] = useState(false);
   const [isLinkInput, setIsLinkInput] = useState(false);
   const [linkInput, setLinkInput] = useState("");
-  const [isLinkOutput, setIsLinkOutput] = useState(false);
   const [isPdfInput, setIsPdfInput] = useState(false);
   const [pdfInput, setPdfInput] = useState();
-  const [isPdfOutput, setIsPdfOutput] = useState(false);
+  const [isOutputClicked, setIsPdfOutput] = useState(false);
   const [pdfName, setPdfName] = useState("Select a PDF");
   const [isStarted, setIsStarted] = useState(false);
   const [isOutput, setIsOutput] = useState(false);
@@ -59,6 +59,11 @@ function App() {
   const [isSummaryLoading, setIsSummaryLoading] = useState(false);
   const [isRephraseLoading, setIsRephraseLoading] = useState(false);
   const [isQuizLoading, setIsQuizLoading] = useState(false);
+  // const [errSummary, setErrSummary] = useState("");
+  // const [errRephrase, setErrRephrase] = useState("");
+  // const [errQuiz, setErrQuiz] = useState("");
+  // const [errEmpty, setErrEmpty] = useState("");
+  const [err, setErr] = useState("");
 
   const start = () => {
     flushSync(() => {
@@ -146,6 +151,7 @@ function App() {
   };
 
   const getoutputs = async () => {
+    setErr("");
     setSummaryData("");
     setRephrasedData("");
     setQuizData("");
@@ -153,81 +159,85 @@ function App() {
     setIsSummaryLoading(true);
     setIsRephraseLoading(true);
     setIsQuizLoading(true);
+    setIsPdfOutput(true);
+    if (!text) {
+      setErr("Empty Text !!");
+    } else {
+      await axios
+        .post(
+          "api/text/summarize",
 
-    await axios
-      .post(
-        "api/text/summarize",
-
-        {
-          text: text,
-        },
-        {
-          headers: {
-            "content-type": "application/x-www-form-urlencoded",
+          {
+            text: text,
           },
-        }
-      )
-      .then((res) => {
-        flushSync(() => {
-          setSummaryData(res.data);
-          setFuncSelect("summary");
-          setOutputData(res.data);
-          setIsSummaryLoading(false);
-        });
-        const element = document.getElementById("output-section");
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
-        }
-      })
-      .catch((e) => console.log(e));
-    await axios
-      .post(
-        "api/text/quiz",
+          {
+            headers: {
+              "content-type": "application/x-www-form-urlencoded",
+            },
+          }
+        )
+        .then((res) => {
+          flushSync(() => {
+            setSummaryData(res.data);
+            setFuncSelect("summary");
+            setOutputData(res.data);
+            setIsSummaryLoading(false);
+          });
+          const element = document.getElementById("output-section");
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
+        })
+        .catch((e) => console.log(e));
+      await axios
+        .post(
+          "api/text/quiz",
 
-        {
-          text: text,
-        },
-        {
-          headers: {
-            "content-type": "application/x-www-form-urlencoded",
+          {
+            text: text,
           },
-        }
-      )
-      .then((res) => {
-        flushSync(() => {
-          setQuizData(res.data);
-          setIsQuizLoading(false);
-        });
-        const element = document.getElementById("output-section");
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
-        }
-      })
-      .catch((e) => console.log(e));
-    await axios
-      .post(
-        "api/text/rephrase",
+          {
+            headers: {
+              "content-type": "application/x-www-form-urlencoded",
+            },
+          }
+        )
+        .then((res) => {
+          flushSync(() => {
+            setQuizData(res.data);
+            setIsQuizLoading(false);
+          });
+          const element = document.getElementById("output-section");
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
+        })
+        .catch((e) => console.log(e));
+      await axios
+        .post(
+          "api/text/rephrase",
 
-        {
-          text: text,
-        },
-        {
-          headers: {
-            "content-type": "application/x-www-form-urlencoded",
+          {
+            text: text,
           },
-        }
-      )
-      .then((res) => {
-        flushSync(() => {
-          setRephrasedData(res.data);
-          setIsRephraseLoading(false);
-        });
-        const element = document.getElementById("output-section");
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
-        }
-      })
-      .catch((e) => console.log(e));
+          {
+            headers: {
+              "content-type": "application/x-www-form-urlencoded",
+            },
+          }
+        )
+        .then((res) => {
+          flushSync(() => {
+            setRephrasedData(res.data);
+            setIsRephraseLoading(false);
+          });
+          const element = document.getElementById("output-section");
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
+        })
+        .catch((e) => console.log(e));
+    }
   };
 
   const createSummaryTextarea = () => {
@@ -336,7 +346,7 @@ function App() {
         </div>
       )}
 
-      {(summaryData || rephrasedData || quizData) && (
+      {isOutputClicked && (
         <div className="ouput_section" id="output-section">
           <h1 className="view_output">View your outputs:</h1>
           <div className="button-wrapper">
@@ -360,9 +370,13 @@ function App() {
             </button>
           </div>
           <div className="OutputContainer">
-            {(isSummaryLoading && funcSelect === "summary") ||
-            (isRephraseLoading && funcSelect === "rephrase") ||
-            (isQuizLoading && funcSelect === "quiz") ? (
+            {err ? (
+              <div className="error_container">
+                <span className="error">{err}</span>
+              </div>
+            ) : (isSummaryLoading && funcSelect === "summary") ||
+              (isRephraseLoading && funcSelect === "rephrase") ||
+              (isQuizLoading && funcSelect === "quiz") ? (
               <LoadingSpinner />
             ) : (
               <textarea
