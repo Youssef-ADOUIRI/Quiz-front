@@ -97,7 +97,7 @@ function App() {
   const onGiveLink = async () => {
     await axios
       .post(
-        "http://127.0.0.1:8080/api/linktotext",
+        "api/linktotext",
         {
           link: linkInput,
         },
@@ -130,7 +130,7 @@ function App() {
     if (pdfInput) {
       formData.append("pdfFile", pdfInput, pdfInput.name);
       await axios
-        .put("http://127.0.0.1:8080/api/pdftotext", formData, {
+        .put("api/pdftotext", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         })
         .then((res) => {
@@ -156,7 +156,7 @@ function App() {
 
     await axios
       .post(
-        "http://127.0.0.1:8080/api/text/summarize",
+        "api/text/summarize",
 
         {
           text: text,
@@ -182,7 +182,7 @@ function App() {
       .catch((e) => console.log(e));
     await axios
       .post(
-        "http://127.0.0.1:8080/api/text/quiz",
+        "api/text/quiz",
 
         {
           text: text,
@@ -206,7 +206,7 @@ function App() {
       .catch((e) => console.log(e));
     await axios
       .post(
-        "http://127.0.0.1:8080/api/text/rephrase",
+        "api/text/rephrase",
 
         {
           text: text,
