@@ -3,9 +3,7 @@ import { flushSync } from "react-dom";
 import "./App.css";
 import axios from "axios";
 import LoadingSpinner from "./LoadingSpinner";
-
 import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
 
 function downloadPDF(text, txt_type) {
   // create a new jsPDF instance
@@ -15,15 +13,40 @@ function downloadPDF(text, txt_type) {
     format: "a4",
   });
 
+  // detect if text is Tamil
+  const isTamil = /[\u0B80-\u0BFF]/.test(text);
+
+  const tamilFontUrl =
+    "https://fonts.gstatic.com/ea/notosanstamil/v1/NotoSansTamil-Regular.ttf";
+  const tamilFontName = "Noto Sans Tamil";
+  // set the font and font size
+  const fontName = isTamil ? tamilFontName : "times";
+  const fontStyle = "normal";
+  const encoding = isTamil ? "Identity-H" : "StandardEncoding";
+  const fontSize = 12;
+  const hasTamilChars = /[ௐ-௹]/.test(text);
+
+  if (hasTamilChars) {
+    // Load the Tamil font from file
+    const tamilFont = tamilFontUrl;
+    doc.addFileToVFS(tamilFont);
+    doc.addFont(fontName, fontStyle, tamilFont, encoding);
+
+    // Set the font to Tamil
+    doc.setFont(fontName);
+  } else {
+    // Set the font to Times
+    doc.setFont(fontName, fontStyle);
+  }
+
   // Add heading
   doc.setFontSize(16);
-  doc.setFont("helvetica", "bold");
   doc.text(txt_type.toUpperCase(), 10, 10);
-  //add text
+
+  // Add text
   doc.setLineWidth(0.5);
   doc.setLineHeightFactor(1.2);
-  doc.setFontSize(12);
-  doc.setFont("times", "normal");
+  doc.setFontSize(fontSize);
   const splitText = doc.splitTextToSize(text, doc.internal.pageSize.width - 20);
   let cursorY = 20; // set initial y position
   splitText.forEach((line) => {
@@ -33,7 +56,7 @@ function downloadPDF(text, txt_type) {
       cursorY = 20; // reset y position
     }
     doc.text(line, 10, cursorY); // add line of text
-    cursorY += 10; // increase y position by line height
+    cursorY += fontSize * doc.getLineHeightFactor(); // increase y position by line height
   });
 
   // save the PDF document
@@ -280,9 +303,17 @@ function App() {
                 Get Started!
               </button>
             </div>
-            <h1 className="txt_bubble txt_bubble_summarize">summarize,</h1>
-            <h1 className="txt_bubble txt_bubble_paraphrase">paraphrase,</h1>
-            <h1 className="quiz">quiz!</h1>
+            <img
+              src="img/summarize.png"
+              alt="myImage"
+              className="img_summarize"
+            />
+            <img
+              src="img/paraphrase.png"
+              alt="myImage"
+              className="img_paraphrase"
+            />
+            <img src="img/quiz.png" alt="myImage" className="img_quiz" />
           </div>
         </div>
       </div>
