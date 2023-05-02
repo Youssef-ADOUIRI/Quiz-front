@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { flushSync } from "react-dom";
 import "./App.css";
 import axios from "axios";
@@ -16,32 +16,23 @@ function downloadPDF(text, txt_type) {
   // detect if text is Tamil
   const isTamil = /[\u0B80-\u0BFF]/.test(text);
 
-  const tamilFontUrl =
-    "https://fonts.gstatic.com/ea/notosanstamil/v1/NotoSansTamil-Regular.ttf";
-  const tamilFontName = "Noto Sans Tamil";
-  // set the font and font size
-  const fontName = isTamil ? tamilFontName : "times";
   const fontStyle = "normal";
   const encoding = isTamil ? "Identity-H" : "StandardEncoding";
   const fontSize = 12;
-  const hasTamilChars = /[ௐ-௹]/.test(text);
-
-  if (hasTamilChars) {
-    // Load the Tamil font from file
-    const tamilFont = tamilFontUrl;
-    doc.addFileToVFS(tamilFont);
-    doc.addFont(fontName, fontStyle, tamilFont, encoding);
-
-    // Set the font to Tamil
-    doc.setFont(fontName);
-  } else {
-    // Set the font to Times
-    doc.setFont(fontName, fontStyle);
-  }
 
   // Add heading
   doc.setFontSize(16);
   doc.text(txt_type.toUpperCase(), 10, 10);
+
+  if (isTamil) {
+    // Load the Tamil font from file
+    doc.addFont("Latha.ttf", "Latha", "normal", encoding);
+    doc.setFont("Latha");
+    doc.setLanguage("ta");
+  } else {
+    // Set the font to Times
+    doc.setFont("times", fontStyle);
+  }
 
   // Add text
   doc.setLineWidth(0.5);
@@ -55,6 +46,7 @@ function downloadPDF(text, txt_type) {
       doc.addPage(); // add new page
       cursorY = 20; // reset y position
     }
+
     doc.text(line, 10, cursorY); // add line of text
     cursorY += fontSize * doc.getLineHeightFactor(); // increase y position by line height
   });
@@ -201,10 +193,10 @@ function App() {
         )
         .then((res) => {
           flushSync(() => {
+            setIsSummaryLoading(false);
             setSummaryData(res.data);
             setFuncSelect("summary");
             setOutputData(res.data);
-            setIsSummaryLoading(false);
           });
           const element = document.getElementById("output-section");
           if (element) {
@@ -229,6 +221,9 @@ function App() {
           flushSync(() => {
             setQuizData(res.data);
             setIsQuizLoading(false);
+            if (funcSelect === "quiz") {
+              setOutputData(quizData);
+            }
           });
           const element = document.getElementById("output-section");
           if (element) {
@@ -251,8 +246,11 @@ function App() {
         )
         .then((res) => {
           flushSync(() => {
-            setRephrasedData(res.data);
             setIsRephraseLoading(false);
+            setRephrasedData(res.data);
+            if (funcSelect === "rephrase") {
+              setOutputData(rephrasedData);
+            }
           });
           const element = document.getElementById("output-section");
           if (element) {
